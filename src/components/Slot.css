@@ -1,0 +1,107 @@
+.slot {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: var(--black);
+  cursor: pointer;
+  user-select: none;
+  border: 1px solid var(--grey-light);
+}
+.slot.is-drag { outline: 2px dashed var(--red); outline-offset: -3px; }
+.slot.has-media { cursor: default; }
+
+.slot-media {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  display: block;
+  background: var(--black);
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  filter: contrast(1.1) saturate(0.85);
+}
+
+.slot-empty {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 6px;
+  background: var(--black);
+  color: var(--cold-white);
+  text-align: center;
+  padding: 8px;
+  overflow: hidden;
+}
+
+/* Ruido más agresivo, más grueso */
+.slot-noise {
+  position: absolute; inset: 0;
+  opacity: 0.28;
+  mix-blend-mode: screen;
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='60' height='60'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.4' numOctaves='2' stitchTiles='stitch'/></filter><rect width='60' height='60' filter='url(%23n)'/></svg>");
+  background-size: 60px 60px;
+  animation: slot-noise 0.6s steps(3) infinite;
+  image-rendering: pixelated;
+}
+@keyframes slot-noise {
+  0%   { transform: translate(0, 0); }
+  33%  { transform: translate(-8px, 6px); }
+  66%  { transform: translate(6px, -4px); }
+  100% { transform: translate(0, 0); }
+}
+
+/* Scanlines chunky */
+.slot-bars {
+  position: absolute; inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(255,255,255,0.03) 0 1px,
+    rgba(0,0,0,0.25) 1px 3px
+  );
+}
+
+/* Etiqueta con chromatic aberration Y2K/VHS */
+.slot-label {
+  position: relative;
+  z-index: 2;
+  font-family: var(--f-pixel);
+  font-size: clamp(10px, 1.6vw, 13px);
+  letter-spacing: 2px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--cold-white);
+  text-shadow:
+    -1px 0 0 rgba(212,42,42,0.65),
+     1px 0 0 rgba(47,95,219,0.65);
+  animation: slot-blink 1.2s steps(2) infinite;
+}
+.slot-sub {
+  position: relative;
+  z-index: 2;
+  font-family: var(--f-pixel);
+  font-size: clamp(8px, 1.1vw, 10px);
+  color: var(--grey);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+@keyframes slot-blink {
+  0%, 55%   { opacity: 1; }
+  56%, 62%  { opacity: 0.2; }
+  63%, 100% { opacity: 1; }
+}
+
+/* Línea de tracking VHS que baja lento */
+.slot-empty::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; height: 8px;
+  background: linear-gradient(180deg, transparent, rgba(255,255,255,0.12), transparent);
+  animation: slot-tracking 6s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+@keyframes slot-tracking {
+  0%   { top: -8px; }
+  100% { top: 100%; }
+}

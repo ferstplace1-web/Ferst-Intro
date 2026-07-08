@@ -1,0 +1,188 @@
+/* ═══════════════════════════════════════════════════════════════
+   THEME CENTRAL — Sufro tu indiferencia
+
+   Todos los tokens (fuentes, colores, tamaños, bordes, sombras)
+   viven acá. Cambio de tema = <html data-theme="X">.
+   Los componentes NO deben hardcodear fuentes/colores — usar
+   SIEMPRE las variables --f-*, --fs-*, --shadow-*, etc.
+
+   Referencia default: catálogo Silk Road (2013)
+     · Georgia italic para logo/números
+     · Verdana para body/UI/links
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─── @font-face MS Sans Serif (Win 98 nativo — usado en tema mssans) ─── */
+@font-face {
+  font-family: 'MS Sans Serif';
+  src: url('https://unpkg.com/98.css@0.1.20/dist/ms_sans_serif.woff2') format('woff2'),
+       url('https://unpkg.com/98.css@0.1.20/dist/ms_sans_serif.woff') format('woff');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'MS Sans Serif';
+  src: url('https://unpkg.com/98.css@0.1.20/dist/ms_sans_serif_bold.woff2') format('woff2'),
+       url('https://unpkg.com/98.css@0.1.20/dist/ms_sans_serif_bold.woff') format('woff');
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+
+/* ─── Fuentes bitmap Y2K (para temas alternativos) ─── */
+@import url('https://fonts.cdnfonts.com/css/perfect-dos-vga-437');
+@import url('https://fonts.cdnfonts.com/css/w95fa');
+
+/* Georgia y Verdana son fuentes del sistema — no requieren import */
+
+/* ═══════════════════════════════════════════════════════════════
+   TOKENS GLOBALES (colores + medidas) — no dependen del tema
+   ═══════════════════════════════════════════════════════════════ */
+:root {
+  /* Paleta cold-tech confessional */
+  --cold-white:  #F4F4F4;
+  --white:       #FFFFFF;
+  --black:       #0D0D0D;
+  --grey:        #8A8D91;
+  --grey-light:  #E9E9E9;
+  --blue:        #2F5FDB;
+  --red:         #D42A2A;
+
+  /* Chrome 3D Win98 */
+  --chrome-hi:     #FFFFFF;
+  --chrome-lo:     #808080;
+  --chrome-shadow: #303033;
+
+  /* Tamaños tipográficos */
+  --fs-xxs:  9px;
+  --fs-xs:  10px;
+  --fs-sm:  11px;
+  --fs-md:  12px;
+  --fs-lg:  13px;
+  --fs-xl:  14px;
+  --fs-2xl: 16px;
+  --fs-3xl: 20px;
+  --fs-4xl: 28px;
+  --fs-hero: 48px;
+
+  /* Alturas UI */
+  --h-titlebar: 20px;
+  --h-menu:     20px;
+  --h-btn:      22px;
+  --h-input:    22px;
+
+  /* Bordes / sombras Win98 */
+  --border-hard:      1px solid var(--black);
+  --shadow-3d-raised: inset 1px 1px 0 var(--chrome-hi), inset -1px -1px 0 var(--chrome-lo);
+  --shadow-3d-sunk:   inset -1px -1px 0 var(--chrome-hi), inset 1px 1px 0 var(--chrome-lo);
+  --shadow-drop:      2px 2px 0 var(--black);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   DEFAULT THEME — SILKROAD (Georgia + Verdana)
+   Referencia visual directa del catálogo anonymous market 2013
+   ═══════════════════════════════════════════════════════════════ */
+:root {
+  /* ─── Fuentes semánticas ─── */
+  --f-title:   Georgia, 'Times New Roman', serif;   /* logo Silk-Road-esque, obituarios */
+  --f-display: Verdana, Arial, sans-serif;          /* titles de tarjetas, contactos */
+  --f-body:    Verdana, Arial, sans-serif;          /* cuerpo, mensajes, párrafos */
+  --f-ui:      Verdana, Arial, sans-serif;          /* botones, menús, titlebars */
+  --f-link:    Verdana, Arial, sans-serif;          /* hipervínculos subrayados */
+  --f-mono:    Verdana, Arial, sans-serif;          /* metadata — Silk Road no usa mono */
+  --f-crt:     Verdana, Arial, sans-serif;          /* status bar, address bar */
+  --f-pixel:   Verdana, Arial, sans-serif;          /* chrome */
+  --f-serif:   Georgia, 'Times New Roman', serif;   /* citas, énfasis */
+  --f-num:     Georgia, 'Times New Roman', serif;   /* números italicizados (2,066) */
+
+  /* Peso base */
+  --fw-normal: 400;
+  --fw-bold:   700;
+}
+
+/* Selector explícito (para que el theme picker lo muestre como activo) */
+[data-theme="silkroad"] {
+  --f-title:   Georgia, 'Times New Roman', serif;
+  --f-display: Verdana, Arial, sans-serif;
+  --f-body:    Verdana, Arial, sans-serif;
+  --f-ui:      Verdana, Arial, sans-serif;
+  --f-link:    Verdana, Arial, sans-serif;
+  --f-mono:    Verdana, Arial, sans-serif;
+  --f-crt:     Verdana, Arial, sans-serif;
+  --f-pixel:   Verdana, Arial, sans-serif;
+  --f-serif:   Georgia, 'Times New Roman', serif;
+  --f-num:     Georgia, 'Times New Roman', serif;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TEMAS ALTERNATIVOS (para pruebas de UI desde el picker)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* mssans: Windows 98 fiel — todo MS Sans Serif */
+[data-theme="mssans"] {
+  --f-title:   'MS Sans Serif', Tahoma, sans-serif;
+  --f-display: 'MS Sans Serif', Tahoma, sans-serif;
+  --f-body:    'MS Sans Serif', Tahoma, sans-serif;
+  --f-ui:      'MS Sans Serif', Tahoma, sans-serif;
+  --f-link:    'MS Sans Serif', Tahoma, sans-serif;
+  --f-mono:    'MS Sans Serif', Tahoma, sans-serif;
+  --f-crt:     'MS Sans Serif', Tahoma, sans-serif;
+  --f-pixel:   'MS Sans Serif', Tahoma, sans-serif;
+  --f-num:     'MS Sans Serif', Tahoma, sans-serif;
+}
+
+/* dos: terminal absoluto — todo Perfect DOS VGA 437 */
+[data-theme="dos"] {
+  --f-title:   'Perfect DOS VGA 437', 'Courier New', monospace;
+  --f-display: 'Perfect DOS VGA 437', 'Courier New', monospace;
+  --f-body:    'Perfect DOS VGA 437', 'Courier New', monospace;
+  --f-ui:      'Perfect DOS VGA 437', 'Courier New', monospace;
+  --f-link:    'Perfect DOS VGA 437', 'Courier New', monospace;
+  --f-mono:    'Perfect DOS VGA 437', 'Courier New', monospace;
+  --f-crt:     'Perfect DOS VGA 437', 'Courier New', monospace;
+  --f-pixel:   'Perfect DOS VGA 437', 'Courier New', monospace;
+  --f-num:     'Perfect DOS VGA 437', 'Courier New', monospace;
+  --fs-sm: 12px; --fs-md: 14px; --fs-lg: 16px; --fs-xl: 18px;
+}
+
+/* w95fa: reinterpretación moderna Y2K */
+[data-theme="w95fa"] {
+  --f-title:   'W95FA', 'MS Sans Serif', sans-serif;
+  --f-display: 'W95FA', 'MS Sans Serif', sans-serif;
+  --f-body:    'W95FA', 'MS Sans Serif', sans-serif;
+  --f-ui:      'W95FA', 'MS Sans Serif', sans-serif;
+  --f-link:    'W95FA', 'MS Sans Serif', sans-serif;
+  --f-mono:    'W95FA', 'Perfect DOS VGA 437', monospace;
+  --f-crt:     'W95FA', 'Perfect DOS VGA 437', monospace;
+  --f-pixel:   'W95FA', 'MS Sans Serif', sans-serif;
+  --f-num:     'W95FA', 'MS Sans Serif', sans-serif;
+}
+
+/* terminal: DOS invertido con fósforo verde */
+[data-theme="terminal"] {
+  --cold-white: #0a0f0a;
+  --white:      #0a0f0a;
+  --black:      #b8d4b0;
+  --grey:       #4a6a44;
+  --grey-light: #1a2a1a;
+  --blue:       #6bffb0;
+  --red:        #ff5a5a;
+  --chrome-hi:     #2a4a24;
+  --chrome-lo:     #050805;
+  --chrome-shadow: #050805;
+  --f-title:   'Perfect DOS VGA 437', 'Courier New', monospace;
+  --f-display: 'Perfect DOS VGA 437', 'Courier New', monospace;
+  --f-body:    'Perfect DOS VGA 437', 'Courier New', monospace;
+  --f-ui:      'Perfect DOS VGA 437', 'Courier New', monospace;
+  --f-link:    'Perfect DOS VGA 437', 'Courier New', monospace;
+  --f-mono:    'Perfect DOS VGA 437', 'Courier New', monospace;
+  --f-crt:     'Perfect DOS VGA 437', 'Courier New', monospace;
+  --f-pixel:   'Perfect DOS VGA 437', 'Courier New', monospace;
+  --f-num:     'Perfect DOS VGA 437', 'Courier New', monospace;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BASE — pixelado global, sin antialiasing agresivo
+   ═══════════════════════════════════════════════════════════════ */
+html { image-rendering: pixelated; image-rendering: -moz-crisp-edges; }
+body {
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+  text-rendering: optimizeLegibility;
+}

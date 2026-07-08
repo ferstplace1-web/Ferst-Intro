@@ -1,0 +1,193 @@
+.icq-win {
+  max-width: 680px;
+  width: 92vw;
+  background: #e5eede;
+  color: #1a2b18;
+  font-family: 'MS Sans Serif', Tahoma, sans-serif;
+  font-size: 12px;
+  border: 2px solid #3d6b2f;
+  box-shadow: 3px 3px 0 rgba(0,0,0,0.4);
+}
+
+.icq-title {
+  display: flex; align-items: center; gap: 6px;
+  background: linear-gradient(180deg, #6ba53e 0%, #3d6b2f 100%);
+  color: #fff;
+  padding: 3px 6px;
+  font-weight: 700;
+}
+.icq-flower {
+  color: #ffd23d;
+  font-size: 14px;
+  text-shadow: 0 0 3px rgba(0,0,0,0.4);
+}
+.icq-title-text { flex: 1; }
+.icq-ctrls { display: flex; gap: 3px; }
+.icq-ctrls .mc {
+  width: 20px; height: 18px;
+  padding: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: #c0e2a0;
+  border: 1px solid #1a3011;
+  font-size: 11px; cursor: pointer;
+  font-family: inherit;
+}
+.icq-ctrls .mc-x { background: #c62828; color: #fff; }
+
+.icq-body {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  min-height: 340px;
+  background: #fff;
+}
+@media (max-width: 600px) {
+  .icq-body { grid-template-columns: 1fr; }
+}
+
+/* Sidebar */
+.icq-side {
+  background: linear-gradient(180deg, #d9e8c6, #b7ce9a);
+  padding: 10px;
+  border-right: 2px solid #3d6b2f;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.icq-me {
+  display: flex; gap: 8px; align-items: center;
+  background: #fff;
+  border: 1px solid #3d6b2f;
+  padding: 6px;
+}
+.icq-me-flower {
+  font-size: 24px;
+  color: #6ba53e;
+}
+.icq-me-nick { font-weight: 700; color: #3d6b2f; }
+.icq-me-num { font-family: 'Courier New', monospace; font-size: 10px; color: #666; }
+
+.icq-side-title {
+  font-weight: 700;
+  color: #3d6b2f;
+  border-bottom: 1px dotted #3d6b2f;
+  padding-bottom: 2px;
+}
+.icq-contacts { list-style: none; padding: 0; margin: 0; }
+.icq-contacts li {
+  display: flex; align-items: center; gap: 6px;
+  padding: 3px 4px;
+  cursor: default;
+}
+.icq-contacts li.on { background: #fff8c4; font-weight: 700; }
+.icq-flower.on { color: #ffb400; }
+.icq-flower.off { color: #b0b0b0; }
+
+.icq-status-picker select {
+  width: 100%;
+  border: 1px solid #3d6b2f;
+  background: #fff;
+  padding: 2px 4px;
+  font-family: inherit;
+  font-size: 11px;
+}
+
+/* Main */
+.icq-main {
+  display: flex; flex-direction: column;
+  min-width: 0;
+}
+.icq-tabs {
+  display: flex;
+  background: linear-gradient(180deg, #d9e8c6, #b7ce9a);
+  border-bottom: 2px solid #3d6b2f;
+}
+.icq-tab {
+  padding: 5px 14px;
+  border-right: 1px solid #3d6b2f;
+  cursor: default;
+  color: #3d6b2f;
+}
+.icq-tab.active {
+  background: #fff;
+  font-weight: 700;
+  border-bottom: 2px solid #fff;
+  margin-bottom: -2px;
+}
+
+.icq-history {
+  flex: 1;
+  padding: 10px 12px;
+  overflow-y: auto;
+  max-height: 360px;
+}
+.icq-entry { margin-bottom: 8px; }
+.icq-entry-date {
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  color: #6b8a5a;
+}
+.icq-entry-text {
+  padding: 3px 6px;
+  background: #f4f8ec;
+  border-left: 3px solid #6ba53e;
+  margin-top: 1px;
+}
+.icq-entry.sys .icq-entry-text {
+  background: transparent;
+  border: none;
+  text-align: center;
+  color: #888;
+  font-style: italic;
+  padding: 0;
+}
+
+.icq-attachment {
+  margin: 14px 0;
+  border: 1px solid #3d6b2f;
+  background: #f4f8ec;
+  padding: 8px;
+}
+.icq-att-title {
+  font-weight: 700;
+  color: #3d6b2f;
+  margin-bottom: 6px;
+}
+.icq-attachment .slot { border: 1px solid #3d6b2f; outline: none; }
+.icq-att-foot {
+  margin-top: 6px;
+  font-size: 10px;
+  color: #666;
+  font-family: 'Courier New', monospace;
+}
+
+.icq-compose {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 6px;
+  padding: 8px;
+  background: #e5eede;
+  border-top: 2px solid #3d6b2f;
+}
+.icq-compose textarea {
+  height: 40px;
+  border: 1px solid #3d6b2f;
+  padding: 4px 6px;
+  font-family: Tahoma, sans-serif;
+  font-size: 12px;
+  resize: none;
+}
+.icq-compose button {
+  background: linear-gradient(180deg, #a8d179, #6ba53e);
+  border: 1px solid #1a3011;
+  color: #fff;
+  font-weight: 700;
+  padding: 0 18px;
+  cursor: pointer;
+}
+
+.icq-foot {
+  display: flex; justify-content: space-between;
+  padding: 3px 8px;
+  background: #d9e8c6;
+  border-top: 1px solid #3d6b2f;
+  font-size: 11px;
+  color: #3d6b2f;
+}

@@ -1,0 +1,184 @@
+/* ═══════════════════════════════════════════
+   BASE — tokens y fuentes vienen de src/theme.css
+   ═══════════════════════════════════════════ */
+
+/* Reset */
+*, *::before, *::after { box-sizing: border-box; }
+html, body, #root { margin: 0; padding: 0; min-height: 100%; height: 100%; }
+button { font: inherit; cursor: pointer; }
+img, video { max-width: 100%; display: block; }
+
+body {
+  font-family: var(--f-body);
+  color: var(--black);
+  background: var(--cold-white);
+  /* Y2K turbio — sin antialiasing salvo donde se necesite */
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+  overflow: hidden;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+}
+
+.os {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: var(--cold-white);
+}
+
+/* Scanlines CRT globales */
+.os::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0,0,0,0.045) 0 1px,
+    transparent 1px 3px
+  );
+  mix-blend-mode: multiply;
+  z-index: 9998;
+}
+
+/* Vignette + grano turbio */
+.os::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0 0 220px rgba(0,0,0,0.18);
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='220' height='220' filter='url(%23n)' opacity='0.5'/></svg>");
+  mix-blend-mode: multiply;
+  opacity: 0.35;
+  z-index: 9997;
+}
+
+/* Videos e imagenes turbias: pixeladas, un pelín desaturadas */
+video, img {
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+}
+.slot-media {
+  filter: contrast(1.08) saturate(0.88);
+}
+
+.os-main {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  bottom: 30px;
+  overflow: hidden;
+}
+
+/* ═══════════════════════════════════════════
+   Taskbar — Y2K chunky monochrome
+   ═══════════════════════════════════════════ */
+.os-taskbar {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 32px;
+  display: flex; align-items: stretch;
+  background: var(--black);
+  color: var(--cold-white);
+  padding: 2px 3px;
+  gap: 2px;
+  z-index: 10000;
+  font-family: var(--f-pixel);
+  font-size: 11px;
+  border-top: 2px solid var(--cold-white);
+  box-shadow: inset 0 1px 0 #303033;
+}
+.os-start {
+  display: flex; align-items: center; gap: 6px;
+  padding: 0 12px;
+  background: var(--black);
+  border: 1px solid var(--cold-white);
+  box-shadow: inset 1px 1px 0 #303033, inset -1px -1px 0 #000;
+  color: var(--cold-white);
+  font-family: var(--f-pixel);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.os-start:hover { background: var(--red); }
+.os-start:active { box-shadow: inset -1px -1px 0 #303033, inset 1px 1px 0 #000; }
+.os-flag {
+  display: inline-block;
+  width: 10px; height: 10px;
+  background: var(--red);
+  border-radius: 0;
+  box-shadow: 1px 0 0 #fff, 0 1px 0 #fff;
+}
+.os-tasks {
+  flex: 1;
+  display: flex; gap: 2px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.os-tasks::-webkit-scrollbar { display: none; }
+.os-taskbtn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 0 10px;
+  background: var(--black);
+  border: 1px solid #303033;
+  box-shadow: inset 1px 1px 0 #303033, inset -1px -1px 0 #000;
+  color: var(--cold-white);
+  white-space: nowrap;
+  min-width: 110px;
+  text-align: left;
+  font-family: var(--f-pixel);
+  font-size: 11px;
+  letter-spacing: 0.3px;
+}
+.os-taskbtn:hover { background: #202024; }
+.os-taskbtn.active {
+  background: var(--cold-white); color: var(--black);
+  box-shadow: inset -1px -1px 0 #fff, inset 1px 1px 0 #808080;
+}
+.os-taskbtn.min { opacity: 0.55; }
+.os-taskicon { flex: none; font-size: 11px; line-height: 1; opacity: 0.85; }
+.os-tasklabel { overflow: hidden; text-overflow: ellipsis; }
+
+.os-tray {
+  display: flex; align-items: center; gap: 10px;
+  padding: 0 12px;
+  background: var(--black);
+  border: 1px solid #303033;
+  box-shadow: inset 1px 1px 0 #000, inset -1px -1px 0 #303033;
+  color: var(--grey);
+}
+.os-tray span { font-size: 11px; }
+.os-clock {
+  font-family: var(--f-pixel);
+  color: var(--cold-white);
+  letter-spacing: 0.5px;
+}
+
+@media (max-width: 560px) {
+  .os-tasklabel { display: none; }
+  .os-taskbtn { min-width: auto; padding: 0 10px; }
+  .os-start b { display: none; }
+}
+
+/* ═══════════════════════════════════════════
+   Utility patterns
+   ═══════════════════════════════════════════ */
+a { color: var(--blue); text-decoration: underline; text-underline-offset: 2px; font-family: var(--f-link); }
+a:visited { color: var(--blue); }
+a:hover { color: var(--black); background: var(--cold-white); }
+
+.badge-live {
+  display: inline-block;
+  font-family: var(--f-link);
+  font-weight: 700;
+  background: var(--red);
+  color: #ffffff;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  text-transform: lowercase;
+}

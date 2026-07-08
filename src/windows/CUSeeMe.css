@@ -1,0 +1,577 @@
+.cuseeme-win {
+  background: var(--cold-white);
+  color: var(--black);
+  font-family: var(--f-body);
+  border: 1px solid var(--black);
+  box-shadow:
+    inset -1px -1px 0 #808080,
+    inset  1px  1px 0 #fff;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* ── Titlebar chunky Y2K ── */
+.mosaic-titlebar {
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--black);
+  color: var(--cold-white);
+  padding: 4px 8px;
+  font-family: var(--f-pixel);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  flex: none;
+  border-bottom: 1px solid var(--black);
+  box-shadow: inset 0 -1px 0 #303033;
+}
+.mosaic-title { padding-left: 0; }
+.mosaic-controls { display: flex; gap: 6px; }
+.mc {
+  width: 20px; height: 18px;
+  padding: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--cold-white);
+  color: var(--black);
+  border: 1px solid var(--black);
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #808080;
+  font-family: var(--f-pixel);
+  font-size: 11px; line-height: 1;
+  cursor: pointer;
+}
+.mc:hover { background: #d0d0d0; }
+.mc:active { box-shadow: inset -1px -1px 0 #fff, inset 1px 1px 0 #808080; }
+.mc-close:hover { background: var(--red); color: #fff; }
+
+/* ── Menu ── */
+.mosaic-menu {
+  display: flex; gap: 0;
+  background: var(--cold-white);
+  padding: 0;
+  border-bottom: 1px solid var(--black);
+  font-size: 11px;
+  position: relative;
+  flex: none;
+}
+.mm {
+  padding: 5px 10px;
+  color: var(--black);
+  font-family: var(--f-pixel);
+  font-weight: 400;
+  letter-spacing: 0.3px;
+  text-transform: lowercase;
+}
+.mm u { text-decoration: none; }
+.mm-clickable { cursor: pointer; user-select: none; position: relative; }
+.mm-clickable:hover,
+.mm-clickable.active {
+  background: var(--black); color: var(--cold-white);
+}
+
+/* ── Dropdown Hotlists ── */
+.mm-dropdown {
+  position: absolute;
+  top: 100%; left: 0;
+  min-width: 260px;
+  background: var(--white);
+  border: 1px solid var(--grey-light);
+  padding: 6px 0;
+  z-index: 1000;
+  color: var(--black);
+  font-size: 13px;
+  font-family: var(--f-body);
+}
+.mm-drop-title {
+  font-size: 11px; padding: 6px 14px 2px;
+  color: var(--grey);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.mm-drop-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+.mm-drop-item:hover { background: var(--cold-white); }
+.mm-drop-item.off { color: var(--grey); cursor: not-allowed; }
+.mm-drop-item.off:hover { background: transparent; }
+.mm-drop-item.quiet { color: var(--grey); font-size: 11px; padding: 6px 14px; }
+.mm-drop-item.quiet:hover { background: var(--cold-white); color: var(--black); }
+.mm-drop-icon {
+  display: inline-block; width: 16px; text-align: center;
+  color: var(--grey);
+}
+.mm-drop-sep {
+  height: 1px; background: var(--grey-light); margin: 6px 0;
+}
+
+/* ── Toolbar ── */
+.mosaic-toolbar {
+  display: flex; align-items: center; gap: 3px;
+  padding: 4px 6px;
+  border-bottom: 1px solid var(--black);
+  background: var(--cold-white);
+  flex: none;
+}
+.mtb-btn {
+  width: 26px; height: 22px;
+  background: var(--cold-white);
+  border: 1px solid var(--black);
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #808080;
+  color: var(--black);
+  font-size: 11px;
+  padding: 0;
+}
+.mtb-btn:hover { background: var(--white); }
+.mtb-btn:active { box-shadow: inset -1px -1px 0 #fff, inset 1px 1px 0 #808080; }
+.mtb-sep {
+  width: 1px; height: 18px; background: #808080;
+  box-shadow: 1px 0 0 #fff;
+  margin: 0 4px;
+}
+.mtb-select {
+  height: 22px;
+  border: 1px solid var(--black);
+  background: var(--cold-white);
+  color: var(--black);
+  font-family: var(--f-pixel);
+  font-size: 10px;
+  padding: 0 6px;
+  text-transform: lowercase;
+}
+
+/* ── Address ── */
+.mosaic-address {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--cold-white);
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--black);
+  flex: none;
+}
+.ma-icon {
+  width: 20px; height: 20px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--white);
+  border: 1px solid var(--black);
+  box-shadow: inset 1px 1px 0 #808080;
+  font-size: 11px; color: var(--red);
+  flex: none;
+}
+.ma-input {
+  flex: 1;
+  height: 22px;
+  border: 1px solid var(--black);
+  background: var(--white);
+  color: var(--black);
+  box-shadow: inset 1px 1px 0 #808080;
+  padding: 0 6px;
+  font-family: var(--f-crt);
+  font-size: 14px;
+  min-width: 0;
+  letter-spacing: 0.3px;
+}
+.ma-input:focus { outline: none; border-color: var(--blue); }
+
+/* ── Bookmarks toolbar ── */
+.mosaic-bookmarks {
+  display: flex; align-items: center; gap: 4px; flex-wrap: wrap;
+  background: var(--cold-white);
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--black);
+  flex: none;
+}
+.mbm-label {
+  font-family: var(--f-pixel);
+  font-size: 10px; color: var(--grey);
+  padding-right: 8px;
+  border-right: 1px solid var(--grey);
+  margin-right: 6px;
+  letter-spacing: 0.5px;
+  text-transform: lowercase;
+}
+.mbm-btn {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 8px;
+  background: transparent;
+  border: none;
+  font-family: var(--f-link);
+  font-size: 12px;
+  color: var(--blue);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.mbm-btn:hover { background: var(--white); color: var(--black); }
+.mbm-icon { font-size: 11px; color: var(--grey); }
+.mbm-btn:hover .mbm-icon { color: var(--black); }
+
+/* ── Página ── */
+.mosaic-page {
+  background: var(--cold-white);
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+.cu-page-inner {
+  padding: 48px 24px 60px;
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+/* C-me 1 Last Time · Georgia italic bold (referencia: Silk Road logo) */
+.cu-logo {
+  font-family: var(--f-title);
+  font-style: italic;
+  font-weight: 700;
+  color: var(--black);
+  font-size: clamp(46px, 7vw, 78px);
+  margin: 0;
+  letter-spacing: -1.5px;
+  line-height: 1;
+}
+.cu-lasttime {
+  font-family: var(--f-title);
+  font-style: italic;
+  font-weight: 700;
+  color: var(--black);
+  font-size: 1em;
+  letter-spacing: -1.5px;
+}
+.cu-reg { display: none; }
+.cu-welcome {
+  color: var(--grey);
+  font-family: var(--f-title);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(14px, 1.6vw, 18px);
+  margin: 2px 0 20px;
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+.cu-instr {
+  font-family: var(--f-pixel);
+  font-size: 10px;
+  color: var(--grey);
+  background: var(--white);
+  border: 1px dashed var(--black);
+  display: inline-block;
+  padding: 6px 10px;
+  margin: 0 0 32px;
+  letter-spacing: 0.5px;
+  text-transform: lowercase;
+}
+.cu-instr b { color: var(--black); font-weight: 700; }
+
+/* ── Grid de feeds ── */
+.cu-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+@media (max-width: 620px) {
+  .cu-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+}
+@media (max-width: 380px) {
+  .cu-grid { grid-template-columns: 1fr; }
+}
+
+.cu-feed {
+  margin: 0;
+  background: var(--white);
+  border: 1px solid var(--black);
+  box-shadow: 2px 2px 0 var(--black);
+  overflow: hidden;
+  transition: transform 60ms, box-shadow 60ms;
+}
+.cu-feed.clickable { cursor: pointer; }
+.cu-feed.clickable:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 var(--black);
+}
+.cu-feed.clickable:active {
+  transform: translate(1px, 1px);
+  box-shadow: 0 0 0 var(--black);
+}
+
+.cu-feed-bar {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--black);
+  color: var(--cold-white);
+  font-family: var(--f-pixel);
+  font-size: 10px;
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--black);
+  letter-spacing: 0.5px;
+  text-transform: lowercase;
+}
+.cu-feed.is-blocked .cu-feed-bar {
+  background: var(--red);
+  color: #fff;
+  border-bottom-color: var(--red);
+}
+.cu-feed-icon {
+  width: 6px; height: 6px;
+  background: var(--red);
+  border-radius: 50%;
+  flex: none;
+}
+.cu-feed.is-blocked .cu-feed-icon { background: var(--red); }
+.cu-feed-name { flex: 1; font-weight: 500; letter-spacing: 0.2px; }
+.cu-feed-x { opacity: 0.5; font-family: var(--f-mono); }
+
+.cu-feed-body {
+  background: var(--black);
+  aspect-ratio: 4 / 3;
+  position: relative;
+}
+.cu-feed-body .slot {
+  border: none;
+  height: 100%;
+  aspect-ratio: auto;
+}
+
+.cu-blocked {
+  position: absolute; inset: 0;
+  background: var(--black);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  color: var(--cold-white);
+  font-family: var(--f-mono);
+  text-align: center;
+  overflow: hidden;
+}
+.cu-blocked-mask {
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(0deg, rgba(255,255,255,0.02) 0 2px, rgba(0,0,0,0.15) 2px 4px);
+}
+.cu-blocked-txt {
+  position: relative;
+  font-family: var(--f-mono);
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--red);
+  font-size: clamp(11px, 1.6vw, 14px);
+  animation: cu-flicker 1.6s steps(3) infinite;
+}
+.cu-blocked-sub {
+  position: relative;
+  font-family: var(--f-mono);
+  font-size: 10px;
+  color: var(--grey);
+  letter-spacing: 0.5px;
+  margin-top: 6px;
+}
+@keyframes cu-flicker {
+  0%, 70% { opacity: 1; }
+  71%, 78% { opacity: 0.3; }
+  79%, 100% { opacity: 1; }
+}
+
+.cu-feed-meta {
+  padding: 8px 10px 4px;
+  background: var(--white);
+  border-top: 1px solid var(--grey-light);
+}
+/* Feed title · Verdana Bold (referencia: producto Silk Road "1g MDMA 82%+ High Quality") */
+.cu-feed-title {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--black);
+  line-height: 1.25;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cu-feed-sub {
+  font-family: var(--f-body);
+  font-weight: 400;
+  font-size: 11px;
+  color: var(--grey);
+  line-height: 1.35;
+  margin-top: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cu-feed-loc {
+  font-family: var(--f-body);
+  font-size: 10px;
+  color: var(--grey);
+  margin-top: 3px;
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Views · Kbps · fps → Georgia italic (referencia: números 2,066 en Silk Road) */
+.cu-feed-foot {
+  display: flex; align-items: center; justify-content: space-between; gap: 6px;
+  background: var(--white);
+  padding: 4px 10px 8px;
+  font-family: var(--f-num);
+  font-style: italic;
+  font-size: 11px;
+  color: var(--grey);
+  line-height: 1.2;
+}
+.cu-feed-views { color: var(--black); font-weight: 400; font-style: italic; }
+.cu-feed-stats { text-align: right; font-style: italic; }
+.cu-badges { display: flex; gap: 4px; align-items: center; }
+.cb {
+  display: inline-block;
+  width: 12px; height: 12px;
+  background: transparent;
+  border: 1px solid var(--grey-light);
+  text-align: center;
+  line-height: 10px;
+  font-size: 8px;
+  color: var(--grey);
+  border-radius: 2px;
+}
+.cb-num {
+  background: var(--red); color: #ffffff;
+  padding: 0 6px; border: none;
+  font-weight: 700;
+  font-family: var(--f-link);
+  border-radius: 3px;
+}
+.cu-stats { display: flex; gap: 10px; }
+
+/* ── Shortcuts ── */
+.cu-shortcuts {
+  margin: 44px auto 0;
+  max-width: 720px;
+  padding: 24px;
+  background: var(--white);
+  border: 1px solid var(--grey-light);
+  border-radius: 8px;
+  text-align: center;
+}
+.cu-shortcuts-h {
+  font-family: var(--f-display);
+  font-weight: 700;
+  color: var(--black);
+  font-size: 20px;
+  margin: 0 0 4px;
+  letter-spacing: -0.4px;
+}
+.cu-shortcuts-sub {
+  font-family: var(--f-body);
+  color: var(--grey);
+  font-size: 13px;
+  margin: 0 0 20px;
+}
+.cu-shortcuts-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+@media (max-width: 560px) {
+  .cu-shortcuts-grid { grid-template-columns: repeat(2, 1fr); }
+}
+.cu-shortcut {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  padding: 16px 10px;
+  background: var(--cold-white);
+  border: 1px solid var(--grey-light);
+  border-radius: 6px;
+  text-decoration: none;
+  color: var(--black);
+  cursor: pointer;
+  font-family: var(--f-body);
+}
+.cu-shortcut:hover {
+  background: var(--white);
+  border-color: var(--black);
+}
+.cu-shortcut-icon {
+  font-size: 24px; line-height: 1;
+  color: var(--grey);
+}
+.cu-shortcut-lbl {
+  font-family: var(--f-link);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--blue);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.cu-shortcut-url {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  color: var(--grey);
+  word-break: break-all;
+}
+
+.cu-caption {
+  margin: 40px 0 6px;
+  font-family: var(--f-body);
+  letter-spacing: 1px;
+  font-size: 10px;
+  color: var(--grey);
+  text-transform: uppercase;
+}
+.cu-uni {
+  margin: 0;
+  font-family: var(--f-serif);
+  font-style: italic;
+  letter-spacing: 1.5px;
+  font-size: 13px;
+  color: var(--black);
+  line-height: 1.2;
+}
+.cu-broughtby {
+  margin: 14px 0 0;
+  font-family: var(--f-mono);
+  font-style: normal;
+  font-size: 11px;
+  color: var(--grey);
+  letter-spacing: 0.2px;
+}
+.cu-broughtby a {
+  font-family: var(--f-mono);
+  color: var(--black);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.cu-broughtby a:hover { color: var(--blue); background: transparent; }
+
+/* ── Status ── */
+.mosaic-status {
+  display: flex; gap: 2px;
+  background: var(--cold-white);
+  border-top: 1px solid var(--black);
+  padding: 3px 4px;
+  flex: none;
+}
+.ms-tab {
+  padding: 2px 12px;
+  background: var(--cold-white);
+  border: 1px solid var(--black);
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #808080;
+  font-family: var(--f-pixel);
+  font-size: 10px;
+  color: var(--black);
+  letter-spacing: 0.4px;
+  text-transform: lowercase;
+}
+.ms-fill {
+  flex: 1;
+  background: var(--cold-white);
+  border: 1px solid var(--black);
+  box-shadow: inset 1px 1px 0 #808080;
+  padding: 2px 10px;
+  font-family: var(--f-crt);
+  font-size: 13px;
+  color: var(--grey);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 1.4;
+}

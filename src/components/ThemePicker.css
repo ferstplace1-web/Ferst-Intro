@@ -1,0 +1,90 @@
+.tp {
+  position: fixed;
+  right: 8px;
+  bottom: 38px;
+  z-index: 10001;
+  font-family: 'MS Sans Serif', Tahoma, sans-serif;
+}
+
+.tp-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 2px 8px;
+  background: var(--cold-white);
+  color: var(--black);
+  border: 1px solid var(--black);
+  box-shadow: inset 1px 1px 0 var(--chrome-hi), inset -1px -1px 0 var(--chrome-lo);
+  font-family: 'MS Sans Serif', Tahoma, sans-serif;
+  font-size: 11px;
+  cursor: pointer;
+}
+.tp-btn:hover { background: var(--white); }
+.tp-btn:active { box-shadow: inset -1px -1px 0 var(--chrome-hi), inset 1px 1px 0 var(--chrome-lo); }
+
+.tp-dot {
+  width: 8px; height: 8px;
+  background: var(--red);
+  display: inline-block;
+}
+.tp-arrow { font-size: 8px; opacity: 0.7; }
+
+.tp-menu {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 4px);
+  background: var(--cold-white);
+  border: 1px solid var(--black);
+  box-shadow: 2px 2px 0 var(--black);
+  min-width: 220px;
+  padding: 2px;
+  font-family: 'MS Sans Serif', Tahoma, sans-serif;
+}
+.tp-menu-h {
+  padding: 4px 8px 2px;
+  font-size: 10px;
+  color: var(--grey);
+  text-transform: lowercase;
+  letter-spacing: 0.3px;
+  border-bottom: 1px solid var(--grey-light);
+  margin-bottom: 2px;
+}
+.tp-menu-foot {
+  padding: 4px 8px;
+  font-size: 10px;
+  color: var(--grey);
+  border-top: 1px solid var(--grey-light);
+  margin-top: 2px;
+}
+.tp-menu-foot code {
+  font-family: 'Perfect DOS VGA 437', 'Courier New', monospace;
+  color: var(--black);
+  font-size: 11px;
+}
+
+.tp-item {
+  display: block;
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 4px 8px;
+  text-align: left;
+  cursor: pointer;
+  color: var(--black);
+  font-family: 'MS Sans Serif', Tahoma, sans-serif;
+}
+.tp-item:hover { background: var(--blue); color: #fff; }
+.tp-item:hover .tp-item-detail { color: rgba(255,255,255,0.75); }
+.tp-item.active { background: transparent; }
+.tp-item.active::before { content: '● '; color: var(--red); }
+
+.tp-item-label {
+  font-size: 12px;
+  font-weight: 700;
+  display: block;
+  line-height: 1.2;
+}
+.tp-item-detail {
+  font-size: 10px;
+  color: var(--grey);
+  display: block;
+  margin-top: 1px;
+}

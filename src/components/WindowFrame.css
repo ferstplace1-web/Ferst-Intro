@@ -1,0 +1,21 @@
+.win-frame {
+  position: absolute;
+  top: 60px; left: 60px;
+  max-width: 96vw;
+}
+.win-frame.minimized { display: none; }
+
+@media (max-width: 640px) {
+  .win-frame {
+    position: fixed !important;
+    left: 8px !important;
+    right: 8px !important;
+    top: 8px !important;
+    bottom: 44px !important;
+    max-width: none;
+    overflow-y: auto;
+  }
+}
+
+.win-drag { cursor: move; }
+@media (max-width: 640px) { .win-drag { cursor: default; } }

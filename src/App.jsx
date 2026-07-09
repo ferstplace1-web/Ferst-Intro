@@ -129,7 +129,7 @@ export default function App() {
               title={w.props?.contact ? `${APPS[w.app].label} — ${w.props.contact}` : APPS[w.app].label}
             >
               <span className="os-taskicon">
-                {w.app === 'msn'      ? '💬' :
+                {w.app === 'msn'      ? <img src="/msg.png" alt="msn" className="os-taskicon-img" draggable={false} /> :
                  w.app === 'limewire' ? '🔍' :
                  w.app === 'mp3'      ? '♪' :
                                         '📰'}

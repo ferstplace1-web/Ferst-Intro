@@ -1,73 +1,77 @@
 import { useEffect, useRef, useState } from 'react'
 import Slot from '../components/Slot'
+import MosaicDialog from '../components/MosaicDialog'
+import SourceViewer from '../components/SourceViewer'
+import FakeDevTools from '../components/FakeDevTools'
 import './CUSeeMe.css'
 
 /* ─── 9 transmisiones — fragmentos de la misma obsesión ─── */
 const feeds = [
   {
     handle: 'ella',
-    name:   'tercera persona · sin dirección',
-    title:  'ella no me habla más',
-    sub:    'hablo de ella en tercera para no llorar',
+    name:   '',
+    title:  'y si todavía pensas en mi',
+    sub:    'no pronuncies mi nombre',
     views:  '84,151',  ago: '3 semanas',
     fps: '14.7', kbps: '18',
-    src: '/Convert%20to%20GIF%20project%20-%2009%20July%202026%20at%2001.01.42.gif',
+    src: '/Convert%20to%20GIF%20project%20-%2009%20July%202026%20at%2001.01.42.mp4',
   },
   {
     handle: 'ella?',
-    name:   'cuarto vacío · signo de pregunta',
+    name:   'xro nadie tiene el mismo sonido de tu piel',
     title:  'todavía sos vos?',
-    sub:    'ya no sé si estoy hablando con quien creo',
+    sub:    'sigo buscando a alguien q se parezca',
     views:  '175,155', ago: '2 meses',
-    fps: '17.3', kbps: '7',  src: '/1.gif',
+    fps: '17.3', kbps: '7',  src: '/1.mp4',
   },
   {
     handle: 'donde_estas?',
-    name:   'caminando desde las 3am',
+    name:   'camino toda la madrugada x todas las calles donde caminamos',
     title:  'te busqué en todos lados',
-    sub:    'hoteles, calles, tu casa vieja',
+    sub:    '_no location found',
     views:  '103,919', ago: '2 meses',
-    fps: '16.7', kbps: '8',  src: '/cam03.mp4',
+    fps: '16.7', kbps: '8',  src: '/nomiresparaabajo.mp4',
   },
   {
     handle: 'dejame_en_paz',
-    name:   'puerta cerrada con cadena',
-    title:  'no me escribas más',
-    sub:    'ya lo intenté todo y sigo acá',
+    name:   'tomatela x favor',
+    title:  'no m hables +',
+    sub:    'no aguanto posta',
     views:  '84,786',  ago: '3 meses',
-    fps: '16.8', kbps: '17', src: '/cam04.mp4',
+    fps: '16.8', kbps: '17', src: '/pucho(1).mp4',
   },
   {
     handle: 'usuario_bloqueado',
     name:   '— — —',
-    title:  'CONEXIÓN RECHAZADA',
-    sub:    'más habitaciones, más llaves',
+    title:  'CONEXIÓN FALLIDA',
+    sub:    'no se donde carajo te fuiste',
     views:  '0', ago: '—',
     fps: '00.0', kbps: '0', blocked: true,
   },
   {
     handle: 'te_extraño',
-    name:   'madrugada · terraza',
+    name:   'igual cambiaste el chip',
     title:  'aunque me haga mal',
     sub:    'sigo escribiéndote cosas que no voy a mandar',
     views:  '130,517', ago: '5 meses',
-    fps: '16.7', kbps: '15', src: '/cam06.mp4',
+    fps: '16.7', kbps: '15', src: '/dancingwiththestars(1).mp4',
   },
   {
     handle: 'fé',
-    name:   '— dirección · desde afuera del cuadro —',
+    name:   '— sigo intentando hacerte feliz',
     title:  'mi copa siempre va a estar llena',
-    sub:    'mientras tenga fe',
+    sub:    'mientras tenga fé',
     views:  '1',       ago: 'siempre',
-    fps: '24.0', kbps: '—', src: '/cam07.mp4',
+    fps: '24.0', kbps: '—',
+    src: '/Convert%20to%20GIF%20project%20-%2009%20July%202026%20at%2001.01.42-3.mp4',
   },
   {
     handle: 'vox_record_001',
-    name:   'nokia_2003 · memo grabado',
+    name:   'ipod touch_2010 · memo grabado',
     title:  'última cosa que dijiste',
     sub:    'la escucho todas las noches',
     views:  '236,036', ago: '10 meses',
-    fps: '13.1', kbps: '11', src: '/cam08.mp4',
+    fps: '13.1', kbps: '11', src: '/champan.mp4',
   },
   {
     handle: 't_amo_para_siempre',
@@ -75,7 +79,8 @@ const feeds = [
     title:  'lo dije primero',
     sub:    'y sigo sosteniéndolo aunque no lo devuelvas',
     views:  '204,848', ago: '11 meses',
-    fps: '15.6', kbps: '8',  src: '/cam09.mp4',
+    fps: '15.6', kbps: '8',
+    src: '/Convert%20to%20GIF%20project%20-%2009%20July%202026%20at%2001.01.42-6.mp4',
   },
 ]
 
@@ -93,7 +98,7 @@ const bookmarks = [
   {
     app:   'msn',
     label: 'MSN Messenger',
-    icon:  <IconImg src="/ffb08ed6aa4ffbe085675c1a67a41774.png" alt="MSN" />,
+    icon:  <IconImg src="/msg.png" alt="MSN" />,
     emoji: '💬',
   },
   {
@@ -114,14 +119,189 @@ export default function CUSeeMe({ onOpen }) {
   const [hotOpen, setHotOpen] = useState(false)
   const [url, setUrl] = useState('http://c-me.net/welcome-2-our-memories.html')
   const menuRef = useRef(null)
+  /* Menu system state */
+  const [openMenu, setOpenMenu] = useState(null)
+  const [dialog, setDialog] = useState(null)
+  const [sourceOpen, setSourceOpen] = useState(false)
+  const [devtoolsOpen, setDevtoolsOpen] = useState(false)
 
+  /* Cerrar cualquier menu al clickear afuera */
   useEffect(() => {
     const onDoc = (e) => {
-      if (menuRef.current && !menuRef.current.contains(e.target)) setHotOpen(false)
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setOpenMenu(null)
+      }
     }
     document.addEventListener('mousedown', onDoc)
     return () => document.removeEventListener('mousedown', onDoc)
   }, [])
+
+  /* ─── Actions de los menús ─── */
+  const openThemePicker = () => {
+    const btn = document.querySelector('.tp-btn')
+    if (btn) btn.click()
+  }
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen?.().catch(() => {})
+    } else {
+      document.exitFullscreen?.()
+    }
+  }
+  const scrollToTop = () => {
+    document.querySelector('.mosaic-page')?.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+  const openSearchHistory = () => {
+    setOpenMenu(null)
+    onOpen?.('limewire')
+  }
+  const showBlockedCounter = () => {
+    const count = Number(localStorage.getItem('blocked-attempts') || '0')
+    setDialog({
+      kind: 'warning',
+      title: 'Intentos a usuario_bloqueado',
+      message: count === 0
+        ? 'Todavía no le escribiste esta sesión. ¿Ganas de intentarlo?'
+        : `Le escribiste ${count} ${count === 1 ? 'vez' : 'veces'} sin respuesta desde que abriste la página.`,
+      extra: count > 0 ? '"Este mensaje no pudo entregarse a usuario_bloqueado."' : null,
+    })
+  }
+  const showHistory = () => {
+    setDialog({
+      kind: 'info',
+      title: 'Historial de navegación',
+      message: 'Todas las páginas visitadas — en orden cronológico:',
+      extra: (
+        <ul style={{ margin: 0, paddingLeft: 20, listStyle: 'none' }}>
+          <li>· ella</li>
+          <li>· ella?</li>
+          <li>· donde_estas?</li>
+          <li>· dejame_en_paz</li>
+          <li>· usuario_bloqueado <span style={{color:'#a01a1a'}}>(bloqueado hace 6h)</span></li>
+          <li>· te_extraño</li>
+          <li>· fé</li>
+          <li>· vox_record_001</li>
+          <li>· t_amo_para_siempre</li>
+        </ul>
+      ),
+    })
+  }
+  const showFavorites = () => {
+    setDialog({
+      kind: 'info',
+      title: 'Favoritos',
+      message: 'Contactos marcados como favoritos:',
+      extra: (
+        <ul style={{ margin: 0, paddingLeft: 20, listStyle: 'none' }}>
+          <li>★ fé</li>
+          <li>★ t_amo_para_siempre</li>
+          <li style={{opacity:0.4, textDecoration:'line-through'}}>★ usuario_bloqueado <span style={{fontStyle:'italic'}}>(fue removido)</span></li>
+        </ul>
+      ),
+    })
+  }
+  const dlg = (title, message, kind = 'info') => () => {
+    setOpenMenu(null)
+    setDialog({ title, message, kind })
+  }
+
+  /* Quotes rotativas para Copiar del disco */
+  const quotes = [
+    '"prefiero la herida a la indiferencia."',
+    '"porque yo sigo ahí en algún rincón · y no hay ficción."',
+    '"es un círculo, no una espiral."',
+    '"habitaciones infinitas dentro de una misma casa."',
+    '"welcome 2 ur last fucking chance!"',
+    '"y no me contestás."',
+    '"me digo muchas cosas · pero el tiempo sigue pasando."',
+    '"lo dije primero · y sigo sosteniéndolo aunque no lo devuelvas."',
+  ]
+  const copyQuote = () => {
+    setOpenMenu(null)
+    const q = quotes[Math.floor(Math.random() * quotes.length)]
+    if (navigator.clipboard?.writeText) {
+      navigator.clipboard.writeText(q).then(
+        () => setDialog({
+          title: 'Copiado al portapapeles',
+          message: q,
+          kind: 'info',
+          extra: 'Ya no la vas a mandar.',
+        }),
+        () => setDialog({ title: 'Copiar', message: q, kind: 'info' })
+      )
+    } else {
+      setDialog({ title: 'Copiar', message: q, kind: 'info' })
+    }
+  }
+
+  /* ─── Configuración de menús ─── */
+  const menus = {
+    file: [
+      { label: 'Nuevo mensaje',    shortcut: 'Ctrl+N', action: () => { setOpenMenu(null); onOpen('msn', { contact: 'usuario_bloqueado', blocked: true }) } },
+      { label: 'Abrir recuerdo...', shortcut: 'Ctrl+O', action: () => { setOpenMenu(null); onOpen('mp3') } },
+      { label: 'Imprimir...',       shortcut: 'Ctrl+P', action: () => { setOpenMenu(null); onOpen('ads') } },
+      { sep: true },
+      { label: 'Cerrar sesión',     action: dlg('Cerrar sesión', 'usuario_bloqueado ya cerró la sesión. No podés cerrar dos veces la misma conversación.', 'error') },
+      { label: 'Salir',             action: dlg('Salir', 'Ya te fuiste hace rato.', 'warning') },
+    ],
+    edit: [
+      { label: 'Deshacer',      shortcut: 'Ctrl+Z', action: dlg('Deshacer', 'No se puede deshacer lo dicho el 14 de julio.', 'error') },
+      { label: 'Rehacer',       shortcut: 'Ctrl+Y', action: dlg('Rehacer', 'No hay nada para rehacer. Todo pasó.', 'warning') },
+      { sep: true },
+      { label: 'Copiar',        shortcut: 'Ctrl+C', action: copyQuote },
+      { label: 'Pegar',         shortcut: 'Ctrl+V', action: dlg('Pegar', 'El portapapeles guardó "estás ahí?" hace 6h. Nunca la pegaste.', 'info') },
+      { sep: true },
+      { label: 'Buscar...',     shortcut: 'Ctrl+F', action: () => { setOpenMenu(null); onOpen('limewire') } },
+      { label: 'Reemplazar...', action: () => { setOpenMenu(null); onOpen('msn', { contact: 'alguien_como_vos' }) } },
+    ],
+    view: [
+      { label: 'Recargar',                    shortcut: 'F5',  action: dlg('Recargar', 'Listo. Lo mismo de siempre.') },
+      { label: 'Historial',                   action: () => { setOpenMenu(null); showHistory() } },
+      { label: 'Mostrar bloqueados',          action: () => { setOpenMenu(null); showBlockedCounter() } },
+      { sep: true },
+      { label: 'Estilos...',                  action: () => { setOpenMenu(null); openThemePicker() } },
+      { label: 'Pantalla completa',           shortcut: 'F11', action: () => { setOpenMenu(null); toggleFullscreen() } },
+    ],
+    navigate: [
+      { label: 'Atrás',                       action: dlg('Atrás', 'No podés volver.', 'error') },
+      { label: 'Adelante',                    action: dlg('Adelante', 'No hay siguiente. Era todo esto.', 'warning') },
+      { label: 'Inicio',                      action: () => { setOpenMenu(null); scrollToTop() } },
+      { sep: true },
+      { label: 'Favoritos',                   action: () => { setOpenMenu(null); showFavorites() } },
+      { label: 'Añadir a favoritos',          action: dlg('Añadir a favoritos', 'Ya lo tuviste como favorito. No lo trajiste de vuelta.', 'warning') },
+    ],
+    tools: [
+      { label: 'Ver código fuente',           shortcut: 'Ctrl+U', action: () => { setOpenMenu(null); setSourceOpen(true) } },
+      { label: 'Herramientas de desarrollador', shortcut: 'F12', action: () => { setOpenMenu(null); setDevtoolsOpen(true) } },
+      { sep: true },
+      { label: 'Preferencias...',             action: () => { setOpenMenu(null); openThemePicker() } },
+      { label: 'Historial de búsqueda',       action: () => { setOpenMenu(null); openSearchHistory() } },
+    ],
+  }
+
+  /* ─── Keyboard shortcuts ─── */
+  useEffect(() => {
+    const onKey = (e) => {
+      const inInput = e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA'
+      /* Function keys funcionan siempre */
+      if (e.key === 'F5') { e.preventDefault(); dlg('Recargar', 'Listo. Lo mismo de siempre.')() ; return }
+      if (e.key === 'F11') { e.preventDefault(); toggleFullscreen(); return }
+      if (e.key === 'F12') { e.preventDefault(); setDevtoolsOpen(v => !v); return }
+      /* Ctrl+... solo si NO estamos tipeando en un input */
+      if ((e.ctrlKey || e.metaKey) && !inInput) {
+        const k = e.key.toLowerCase()
+        if      (k === 'u') { e.preventDefault(); setSourceOpen(v => !v) }
+        else if (k === 'n') { e.preventDefault(); onOpen?.('msn', { contact: 'usuario_bloqueado', blocked: true }) }
+        else if (k === 'o') { e.preventDefault(); onOpen?.('mp3') }
+        else if (k === 'p') { e.preventDefault(); onOpen?.('ads') }
+        else if (k === 'z') { e.preventDefault(); dlg('Deshacer', 'No se puede deshacer lo dicho el 14 de julio.', 'error')() }
+        else if (k === 'y') { e.preventDefault(); dlg('Rehacer', 'No hay nada para rehacer. Todo pasó.', 'warning')() }
+      }
+      /* Ctrl+C, Ctrl+V, Ctrl+F: NO interceptamos — el usuario necesita esos para copiar/pegar/buscar en la página */
+    }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [onOpen])
 
   const goUrl = (e) => {
     e.preventDefault()
@@ -159,12 +339,43 @@ export default function CUSeeMe({ onOpen }) {
       </header>
 
       <nav className="mosaic-menu" ref={menuRef}>
-        {['File','Edit','View','Navigate','Tools'].map(m => (
-          <span key={m} className="mm"><u>{m[0]}</u>{m.slice(1)}</span>
-        ))}
+        {/* File · Edit · View · Navigate · Tools — todos interactivos */}
+        {['file','edit','view','navigate','tools'].map(name => {
+          const capital = name[0].toUpperCase() + name.slice(1)
+          const items   = menus[name]
+          const isOpen  = openMenu === name
+          return (
+            <span
+              key={name}
+              className={`mm mm-clickable ${isOpen ? 'active' : ''}`}
+              onClick={() => setOpenMenu(o => (o === name ? null : name))}
+            >
+              <u>{capital[0]}</u>{capital.slice(1)}
+              {isOpen && (
+                <div className="mm-dropdown">
+                  {items.map((it, i) => it.sep
+                    ? <div key={i} className="mm-drop-sep" />
+                    : (
+                      <div
+                        key={i}
+                        className="mm-drop-item mm-drop-menuitem"
+                        onClick={(e) => { e.stopPropagation(); it.action() }}
+                      >
+                        <span className="mm-drop-lbl">{it.label}</span>
+                        {it.shortcut && <span className="mm-drop-sc">{it.shortcut}</span>}
+                      </div>
+                    )
+                  )}
+                </div>
+              )}
+            </span>
+          )
+        })}
+
+        {/* Hotlists (contactos) */}
         <span
           className={`mm mm-clickable ${hotOpen ? 'active' : ''}`}
-          onClick={() => setHotOpen(v => !v)}
+          onClick={() => { setHotOpen(v => !v); setOpenMenu(null) }}
         >
           <u>H</u>otlists ▾
           {hotOpen && (
@@ -183,7 +394,6 @@ export default function CUSeeMe({ onOpen }) {
                 </div>
               ))}
               <div className="mm-drop-sep" />
-              {/* accesos ocultos, chicos */}
               <div className="mm-drop-item quiet" onClick={() => { openContact('salvacion_plug_24hs'); setHotOpen(false) }}>
                 <span className="mm-drop-icon">·</span><span>salvacion_plug_24hs</span>
               </div>
@@ -302,7 +512,7 @@ export default function CUSeeMe({ onOpen }) {
           <div className="cu-shortcuts">
             <h2 className="cu-shortcuts-h">links relacionados</h2>
             <p className="cu-shortcuts-sub">
-              otros programas donde también intenté hablarles
+              otras lugares donde t busqe
             </p>
             <div className="cu-shortcuts-grid">
               {bookmarks.map(b => (
@@ -320,12 +530,10 @@ export default function CUSeeMe({ onOpen }) {
             </div>
           </div>
 
-          <p className="cu-caption cu-watermark">D · E · S · K · T · O · P &nbsp;·&nbsp; J · O · S · E · S · S · O · R · I · A</p>
-          <p className="cu-uni">porque yo sigo ahí en algún rincón · y no hay ficción</p>
           <p className="cu-broughtby">
             un recuerdo de <a href="#" onClick={(e)=>{e.preventDefault(); openContact('t_amo_para_siempre')}}>illuno</a>
             &nbsp;·&nbsp;
-            dirección <a href="#" onClick={(e)=>{e.preventDefault(); openContact('fé')}}>fé</a>
+            dir. x <a href="#" onClick={(e)=>{e.preventDefault(); openContact('fé')}}>fé</a>
           </p>
         </div>
       </div>
@@ -338,6 +546,11 @@ export default function CUSeeMe({ onOpen }) {
           <span className="ms-fill-txt">listo · c-me.net · 9 transmisiones · 1 rechazada · illuno / fé</span>
         </span>
       </footer>
+
+      {/* ─── Overlays de menus ─── */}
+      <MosaicDialog dialog={dialog} onClose={() => setDialog(null)} />
+      <SourceViewer open={sourceOpen} onClose={() => setSourceOpen(false)} />
+      <FakeDevTools open={devtoolsOpen} onClose={() => setDevtoolsOpen(false)} />
     </section>
   )
 }

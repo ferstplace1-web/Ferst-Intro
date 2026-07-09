@@ -1,0 +1,159 @@
+.fdt {
+  position: fixed;
+  left: 0; right: 0; bottom: 40px;
+  height: 320px;
+  background: #202124;
+  color: #e8eaed;
+  z-index: 4900;
+  border-top: 1px solid #3c4043;
+  box-shadow: 0 -4px 12px rgba(0,0,0,0.35);
+  font-family: 'Perfect DOS VGA 437', 'Consolas', 'Courier New', monospace;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+}
+.fdt-tabs {
+  display: flex; justify-content: space-between; align-items: stretch;
+  background: #292a2d;
+  border-bottom: 1px solid #3c4043;
+  height: 28px;
+  flex: none;
+}
+.fdt-tab-group { display: flex; }
+.fdt-tab {
+  padding: 0 16px;
+  background: transparent;
+  border: none;
+  border-right: 1px solid #3c4043;
+  color: #9aa0a6;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  font-size: 12px;
+  cursor: pointer;
+}
+.fdt-tab:hover { background: #3c4043; color: #fff; }
+.fdt-tab.active {
+  background: #202124;
+  color: #4c9aff;
+  border-bottom: 2px solid #4c9aff;
+  margin-bottom: -1px;
+}
+.fdt-close {
+  width: 40px;
+  background: transparent;
+  border: none;
+  border-left: 1px solid #3c4043;
+  color: #9aa0a6;
+  font-size: 16px;
+  cursor: pointer;
+}
+.fdt-close:hover { background: #d93025; color: #fff; }
+
+.fdt-body {
+  flex: 1;
+  overflow: auto;
+  padding: 4px 0;
+}
+
+/* Console */
+.fdt-console { padding: 4px 0; }
+.fdt-line {
+  display: flex;
+  gap: 8px;
+  padding: 3px 12px;
+  border-bottom: 1px solid #2a2b2e;
+  line-height: 1.5;
+}
+.fdt-line-icon { width: 12px; flex: none; }
+.fdt-line-error { color: #f28b82; background: rgba(217, 48, 37, 0.10); }
+.fdt-line-error .fdt-line-icon { color: #d93025; }
+.fdt-line-warn { color: #fdd663; }
+.fdt-line-warn .fdt-line-icon { color: #f9ab00; }
+.fdt-line-info { color: #8ab4f8; }
+.fdt-line-info .fdt-line-icon { color: #4285f4; }
+.fdt-line-log { color: #dadce0; }
+.fdt-line-log .fdt-line-icon { color: #9aa0a6; }
+.fdt-prompt {
+  display: flex; gap: 4px;
+  padding: 6px 12px;
+  color: #dadce0;
+}
+.fdt-prompt-arrow { color: #4c9aff; }
+.fdt-prompt-cursor {
+  animation: fdt-blink 1s steps(2) infinite;
+}
+@keyframes fdt-blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* Network */
+.fdt-network { padding: 0; }
+.fdt-net-head, .fdt-net-row {
+  display: grid;
+  grid-template-columns: 60px 1fr 60px 70px 80px 80px;
+  gap: 8px;
+  padding: 4px 12px;
+  border-bottom: 1px solid #2a2b2e;
+}
+.fdt-net-head {
+  background: #292a2d;
+  color: #9aa0a6;
+  font-size: 11px;
+  text-transform: uppercase;
+  position: sticky;
+  top: 0;
+}
+.fdt-net-method { font-weight: 700; color: #8ab4f8; }
+.fdt-net-url {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #dadce0;
+}
+.fdt-net-err .fdt-net-status,
+.fdt-net-err .fdt-net-url { color: #f28b82; }
+.fdt-net-ok .fdt-net-status { color: #81c995; }
+.fdt-net-summary {
+  padding: 8px 12px;
+  color: #9aa0a6;
+  background: #292a2d;
+  border-top: 1px solid #3c4043;
+  position: sticky;
+  bottom: 0;
+}
+
+/* Elements */
+.fdt-elements { padding: 0; }
+.fdt-html {
+  margin: 0;
+  padding: 12px 16px;
+  font-family: 'Perfect DOS VGA 437', 'Consolas', monospace;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #dadce0;
+  white-space: pre;
+  overflow-x: auto;
+}
+.fdt-html .hl {
+  background: rgba(66, 133, 244, 0.20);
+  color: #8ab4f8;
+  border-left: 2px solid #4c9aff;
+  padding-left: 4px;
+  margin-left: -4px;
+}
+
+@media (max-width: 640px) {
+  .fdt { height: 45vh; bottom: 32px; }
+  .fdt-net-head, .fdt-net-row {
+    grid-template-columns: 50px 1fr 50px 70px;
+    font-size: 11px;
+  }
+  .fdt-net-head span:nth-child(4),
+  .fdt-net-row span:nth-child(4),
+  .fdt-net-head span:nth-child(5),
+  .fdt-net-row span:nth-child(5),
+  .fdt-net-head span:nth-child(6),
+  .fdt-net-row span:nth-child(6) {
+    display: none;
+  }
+}

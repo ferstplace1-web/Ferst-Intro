@@ -316,7 +316,7 @@ export default function MSN({
   return (
     <section className="win msn-win">
       <header className="msn-title win-drag">
-        <span className="msn-t-icon" />
+        <img src="/msg.png" alt="msn" className="msn-t-icon" draggable={false} />
         <span className="msn-t-text">{contact} — conversación</span>
         <span className="msn-t-ctrls">
           <button className="mc mc-min" onClick={onMin} title="minimizar">_</button>

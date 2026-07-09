@@ -156,6 +156,17 @@ video, img {
 }
 .os-taskbtn.min { opacity: 0.55; }
 .os-taskicon { flex: none; font-size: 14px; line-height: 1; opacity: 0.95; }
+.os-taskicon-img {
+  display: block;
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  image-rendering: -webkit-optimize-contrast;
+  user-select: none;
+  -webkit-user-drag: none;
+  /* margen negativo — el icono se ve grande pero NO empuja la altura del taskbar */
+  margin: -6px 0;
+}
 .os-tasklabel { overflow: hidden; text-overflow: ellipsis; }
 
 .os-tray {
@@ -194,6 +205,11 @@ video, img {
   .os-start b { display: none; }
   .os-start { padding: 0 10px; }
   .os-taskicon { font-size: 13px; }
+  .os-taskicon-img {
+    width: 26px;
+    height: 26px;
+    margin: -8px 0;
+  }
   .os-taskbtn { min-height: 100%; }
   .os-tray span { font-size: 13px; }
   .os-tray { padding: 0 10px; gap: 8px; }

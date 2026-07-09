@@ -147,6 +147,23 @@
 .mm-drop-item.off:hover { background: transparent; }
 .mm-drop-item.quiet { color: var(--grey); font-size: 11px; padding: 4px 12px; }
 .mm-drop-item.quiet:hover { background: var(--cold-white); color: var(--black); }
+
+/* Menu items con shortcut a la derecha (View/Navigate/Tools) */
+.mm-drop-menuitem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 220px;
+  padding: 5px 14px;
+}
+.mm-drop-lbl { flex: 1; }
+.mm-drop-sc {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  color: var(--grey);
+  margin-left: 20px;
+}
+.mm-drop-menuitem:hover .mm-drop-sc { color: var(--cold-white); }
 .mm-drop-icon {
   display: inline-flex; align-items: center; justify-content: center;
   width: 28px; height: 22px;

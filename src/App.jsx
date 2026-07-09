@@ -79,11 +79,10 @@ export default function App() {
 
       {wins.map((w, i) => {
         const app = APPS[w.app]
-        const Comp = app.Component
-        // En mobile las ventanas cascadean desde arriba-izquierda
-        // (para que se vea claramente que son ventanas movibles)
+        const Comp = app.Component        // En mobile las ventanas cascadean con offset amplio (54px verticales)
+        // para que se lea claramente que hay una ventana debajo
         const defaultPos = isMobile
-          ? { x: 8 + i * 14, y: 12 + i * 26 }
+          ? { x: 6 + i * 16, y: 16 + i * 54 }
           : { x: app.pos.x + i * 20, y: app.pos.y + i * 20 }
         return (
           <WindowFrame
@@ -135,9 +134,7 @@ export default function App() {
                                         '📰'}
               </span>
               <span className="os-tasklabel">
-                {w.props?.contact
-                  ? `${APPS[w.app].label.split(' ')[0]} · ${w.props.contact}`
-                  : APPS[w.app].label}
+                {w.props?.contact ?? APPS[w.app].label}
               </span>
             </button>
           ))}

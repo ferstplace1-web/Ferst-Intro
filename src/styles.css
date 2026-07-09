@@ -175,14 +175,28 @@ video, img {
 }
 
 @media (max-width: 640px) {
-  .os-tasklabel { display: none; }
-  .os-taskbtn { min-width: auto; padding: 0 12px; }
+  /* Labels visibles pero truncados — cada chat abierto se diferencia por handle */
+  .os-tasklabel {
+    display: inline-block;
+    max-width: 68px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 10px;
+    letter-spacing: 0;
+  }
+  .os-taskbtn {
+    min-width: auto;
+    max-width: 110px;
+    padding: 0 8px;
+    gap: 5px;
+  }
   .os-start b { display: none; }
   .os-start { padding: 0 10px; }
-  .os-taskicon { font-size: 14px; }
-  /* área mínima táctil confortable (44px según Apple HIG) */
+  .os-taskicon { font-size: 13px; }
   .os-taskbtn { min-height: 100%; }
   .os-tray span { font-size: 13px; }
+  .os-tray { padding: 0 10px; gap: 8px; }
 }
 
 /* ═══════════════════════════════════════════

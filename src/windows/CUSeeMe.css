@@ -661,25 +661,25 @@
     font-size: 13px;
   }
 
-  /* Hero title más protagonista */
+  /* Hero más compacto — deja que las cards asomen antes del fold */
   .cu-page-inner {
-    padding: 26px 14px 40px;
+    padding: 18px 14px 32px;
     max-width: 100%;
   }
   .cu-logo {
-    font-size: clamp(40px, 13vw, 62px);
-    letter-spacing: -1px;
-    text-shadow: 3px 3px 0 rgba(13, 13, 13, 0.28);
+    font-size: clamp(30px, 10vw, 42px);
+    letter-spacing: -0.5px;
+    text-shadow: 2px 2px 0 rgba(13, 13, 13, 0.25);
   }
   .cu-welcome {
-    font-size: 15px;
-    margin: 4px 0 16px;
+    font-size: 13px;
+    margin: 2px 0 14px;
   }
-  .cu-instr {
-    font-size: 12px;
-    padding: 7px 12px;
-    margin: 0 0 22px;
-  }
+  /* Instrucción "clic en cualquier..." queda implícita por el grid tipo YouTube */
+  .cu-instr { display: none; }
+
+  /* Shortcuts al final del home ya duplican la barra de bookmarks de arriba */
+  .cu-shortcuts { display: none; }
 
   /* Cards mobile compactas · estilo YouTube grid 2 cols */
   .cu-feed {

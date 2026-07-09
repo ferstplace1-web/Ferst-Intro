@@ -42,10 +42,22 @@
   }
 }
 
-/* Drag handle — cursor mouse + previene scroll en touch */
-.win-drag {
+/* Drag handle — cursor mouse + previene scroll en touch + no selecciona */
+.win-drag,
+.win-drag * {
   cursor: move;
   touch-action: none;
   user-select: none;
   -webkit-user-select: none;
+  -webkit-touch-callout: none;   /* iOS: no muestra menu "Copy/Look Up" */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Mientras se está arrastrando, nada puede seleccionarse en toda la pantalla */
+body.is-dragging,
+body.is-dragging * {
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -webkit-touch-callout: none !important;
+  cursor: move !important;
 }

@@ -30,6 +30,11 @@ export default function WindowFrame({
     const origX = posRef.current.x
     const origY = posRef.current.y
 
+    // Bloquear selección de texto durante el drag
+    document.body.classList.add('is-dragging')
+    // Clear cualquier selección en curso
+    if (window.getSelection) window.getSelection().removeAllRanges()
+
     const onMove = (ev) => {
       // Cap: al menos 80px visible siempre (para que no se pierda la ventana)
       const maxX = Math.max(0, window.innerWidth - 80)
@@ -39,6 +44,7 @@ export default function WindowFrame({
       setPos({ x: nx, y: ny })
     }
     const onUp = () => {
+      document.body.classList.remove('is-dragging')
       window.removeEventListener('pointermove', onMove)
       window.removeEventListener('pointerup', onUp)
       window.removeEventListener('pointercancel', onUp)

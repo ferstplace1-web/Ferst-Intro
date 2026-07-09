@@ -1,0 +1,104 @@
+.apop-backdrop {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 5000;
+}
+.apop {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(720px, 94vw);
+  max-height: 82vh;
+  background: var(--white);
+  border: 1px solid var(--aero-frame);
+  box-shadow: var(--aero-window-shadow);
+  border-radius: 6px 6px 0 0;
+  z-index: 5001;
+  font-family: var(--f-ui);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.apop-title-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--aero-titlebar-bg);
+  color: var(--aero-titlebar-text);
+  padding: 0 0 0 10px;
+  height: 28px;
+  font-size: 12px;
+  border-bottom: 1px solid var(--aero-titlebar-border);
+  flex: none;
+}
+.apop-tb-close {
+  width: 32px; height: 19px;
+  background: var(--aero-btn-close-bg);
+  border: 1px solid var(--aero-btn-close-border);
+  border-top: none;
+  color: #fff;
+  font-family: var(--f-ui);
+  font-size: 11px;
+  border-radius: 0 0 2px 2px;
+  margin: 0 5px 0 0;
+  cursor: pointer;
+}
+.apop-tb-close:hover { background: var(--aero-btn-close-bg-hover); }
+
+.apop-title {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-weight: 700;
+  font-size: clamp(28px, 3.6vw, 40px);
+  color: var(--black);
+  text-align: center;
+  margin: 22px 24px 16px;
+  letter-spacing: -0.5px;
+  flex: none;
+}
+
+.apop-scroll {
+  flex: 1;
+  overflow-y: scroll;
+  border: 1px solid var(--aero-input-border);
+  margin: 0 24px;
+  background: var(--white);
+  box-shadow: var(--aero-input-shadow);
+}
+.apop-list {
+  margin: 0;
+  padding: 18px 22px;
+  list-style: none;
+}
+.apop-line {
+  font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--black);
+  letter-spacing: 0.4px;
+  -webkit-font-smoothing: none;
+}
+
+.apop-foot {
+  padding: 14px 24px 16px;
+  display: flex;
+  justify-content: flex-end;
+  flex: none;
+}
+.apop-btn {
+  background: var(--aero-btn-bg);
+  border: 1px solid var(--aero-btn-border);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
+  padding: 5px 22px;
+  font-family: var(--f-ui);
+  font-size: 12px;
+  color: var(--black);
+  cursor: pointer;
+  border-radius: 3px;
+}
+.apop-btn:hover { background: var(--aero-btn-bg-hover); border-color: var(--aero-btn-border-hover); }
+
+@media (max-width: 640px) {
+  .apop { width: 96vw; max-height: 88vh; }
+  .apop-title { margin: 16px 14px 12px; font-size: 26px; }
+  .apop-scroll { margin: 0 14px; }
+  .apop-line { font-size: 14px; }
+  .apop-foot { padding: 10px 14px 14px; }
+}

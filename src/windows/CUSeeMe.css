@@ -387,7 +387,7 @@
   font-style: italic;
   font-weight: 400;
   font-size: clamp(14px, 1.6vw, 18px);
-  margin: 2px 0 20px;
+  margin: 0 0 0;
   line-height: 1.2;
   letter-spacing: 0;
 }
@@ -404,6 +404,61 @@
   text-transform: lowercase;
 }
 .cu-instr b { color: var(--black); font-weight: 700; }
+
+/* Player fijo inline en el home — con close button propio */
+.cu-inline-player {
+  position: relative;
+  max-width: 560px;
+  margin: -4px auto 24px;
+}
+.cu-inline-player-x {
+  position: absolute;
+  top: -8px; right: -8px;
+  z-index: 3;
+  width: 24px; height: 24px;
+  background: var(--aero-btn-close-bg);
+  color: #fff;
+  border: 1px solid var(--aero-btn-close-border);
+  border-radius: 50%;
+  font-family: var(--f-ui);
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.25);
+  padding: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.cu-inline-player-x:hover { background: var(--aero-btn-close-bg-hover); }
+.cu-inline-player-x:active { transform: scale(0.94); }
+
+/* Botón descarga MP3 — mismo estilo Aero, al lado izquierdo del × */
+.cu-inline-player-dl {
+  position: absolute;
+  top: -8px; right: 22px;
+  z-index: 3;
+  width: 24px; height: 24px;
+  background: var(--aero-btn-bg);
+  color: var(--black);
+  border: 1px solid var(--aero-btn-border);
+  border-radius: 50%;
+  font-family: var(--f-ui);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.25);
+  display: flex; align-items: center; justify-content: center;
+}
+.cu-inline-player-dl:hover { background: var(--aero-btn-bg-hover); color: var(--black); }
+.cu-inline-player-dl:active { transform: scale(0.94); }
+.cu-inline-player-dl:visited { color: var(--black); }
+
+@media (max-width: 640px) {
+  .cu-inline-player { max-width: 100%; margin: -2px auto 18px; }
+  .cu-inline-player-x { width: 28px; height: 28px; font-size: 16px; }
+  .cu-inline-player-dl { width: 28px; height: 28px; font-size: 15px; right: 26px; }
+}
 
 /* ── Grid de feeds ── */
 .cu-grid {
@@ -785,7 +840,7 @@
   }
   .cu-welcome {
     font-size: 13px;
-    margin: 2px 0 14px;
+    margin: 0;
   }
   /* Instrucción "clic en cualquier..." queda implícita por el grid tipo YouTube */
   .cu-instr { display: none; }

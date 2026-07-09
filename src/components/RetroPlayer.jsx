@@ -3,27 +3,47 @@ import './RetroPlayer.css'
 
 /**
  * Reproductor de audio estilo Windows XP media player.
- * - src: URL del audio (opcional; si no hay, botones inactivos)
- * - artist / track: texto de los campos
- * - coverSrc: imagen del album (opcional). Si no hay, muestra placeholder.
+ *
+ * Modos:
+ *  1. Single track: pasar `src` + `track` (texto).
+ *  2. Playlist:     pasar `tracks` (array de { file, name }).
+ *     - El campo Track muestra el nombre del archivo actual.
+ *     - El botón <D:> de la fila Track abre un dropdown real con los 12 tracks.
+ *     - Los botones ◀◀ / ▶▶ pasan al track anterior / siguiente.
  */
 export default function RetroPlayer({
   src,
   artist = '????',
   track = 'xfavor no t olvides de esto',
   coverSrc,
+  tracks = null,
 }) {
   const audioRef = useRef(null)
-  const [playing, setPlaying] = useState(false)
+  const wrapRef  = useRef(null)
+  const [playing, setPlaying]   = useState(false)
   const [progress, setProgress] = useState(0)
   const [duration, setDuration] = useState(0)
+  const [idx, setIdx]           = useState(0)
+  const [dropOpen, setDropOpen] = useState(false)
 
+  const hasList  = Array.isArray(tracks) && tracks.length > 0
+  const current  = hasList ? tracks[idx] : null
+  const audioSrc = hasList ? current?.file : src
+  const trackTxt = hasList ? (current?.name || current?.file || '') : track
+
+  /* ── Audio event bindings ─────────────────────────────── */
   useEffect(() => {
     const audio = audioRef.current
     if (!audio) return
     const onTime   = () => setProgress(audio.currentTime)
     const onLoaded = () => setDuration(audio.duration || 0)
-    const onEnded  = () => setPlaying(false)
+    const onEnded  = () => {
+      if (hasList && idx < tracks.length - 1) {
+        setIdx(i => i + 1)
+      } else {
+        setPlaying(false)
+      }
+    }
     audio.addEventListener('timeupdate', onTime)
     audio.addEventListener('loadedmetadata', onLoaded)
     audio.addEventListener('ended', onEnded)
@@ -32,8 +52,31 @@ export default function RetroPlayer({
       audio.removeEventListener('loadedmetadata', onLoaded)
       audio.removeEventListener('ended', onEnded)
     }
-  }, [src])
+  }, [audioSrc, hasList, idx, tracks])
 
+  /* Al cambiar de track — reset progress y auto-play si ya estaba sonando */
+  useEffect(() => {
+    const audio = audioRef.current
+    if (!audio) return
+    setProgress(0)
+    if (playing) {
+      audio.play().catch(() => {})
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [idx])
+
+  /* Click fuera → cerrar dropdown */
+  useEffect(() => {
+    if (!dropOpen) return
+    const onDoc = (e) => {
+      if (!wrapRef.current) return
+      if (!wrapRef.current.contains(e.target)) setDropOpen(false)
+    }
+    document.addEventListener('pointerdown', onDoc)
+    return () => document.removeEventListener('pointerdown', onDoc)
+  }, [dropOpen])
+
+  /* ── Controles ────────────────────────────────────────── */
   const togglePlay = () => {
     const audio = audioRef.current
     if (!audio) return
@@ -45,6 +88,20 @@ export default function RetroPlayer({
     if (!audio) return
     audio.pause(); audio.currentTime = 0
     setPlaying(false); setProgress(0)
+  }
+  const prev = () => {
+    if (hasList) {
+      setIdx(i => (i - 1 + tracks.length) % tracks.length)
+    } else {
+      skip(-10)
+    }
+  }
+  const next = () => {
+    if (hasList) {
+      setIdx(i => (i + 1) % tracks.length)
+    } else {
+      skip(10)
+    }
   }
   const skip = (delta) => {
     const audio = audioRef.current
@@ -58,12 +115,19 @@ export default function RetroPlayer({
     audio.currentTime = (val / 100) * duration
     setProgress(audio.currentTime)
   }
+  const pickTrack = (i) => {
+    setIdx(i)
+    setDropOpen(false)
+    // usuario elige explícitamente → arrancar reproducción
+    setPlaying(true)
+    // el useEffect de idx se encarga de audio.play()
+  }
 
-  const canControl = !!src
+  const canControl = !!audioSrc
 
   return (
-    <div className="retro-player">
-      {src && <audio ref={audioRef} src={src} preload="metadata" />}
+    <div className="retro-player" ref={wrapRef}>
+      {audioSrc && <audio ref={audioRef} src={audioSrc} preload="metadata" />}
 
       <div className="rp-cover">
         {coverSrc ? (
@@ -82,12 +146,34 @@ export default function RetroPlayer({
           </button>
         </div>
 
-        <div className="rp-field">
+        <div className="rp-field rp-field-track">
           <label>Track:</label>
-          <input type="text" value={track} readOnly onChange={() => {}} />
-          <button className="rp-drop" tabIndex={-1}>
+          <input type="text" value={trackTxt} readOnly onChange={() => {}} />
+          <button
+            className="rp-drop"
+            onClick={() => hasList && setDropOpen(o => !o)}
+            title={hasList ? 'elegir track' : undefined}
+            disabled={!hasList}
+          >
             &lt;D:&gt;<span className="rp-arrow">▼</span>
           </button>
+          {hasList && dropOpen && (
+            <ul className="rp-drop-menu" role="listbox">
+              {tracks.map((t, i) => (
+                <li
+                  key={i}
+                  role="option"
+                  aria-selected={i === idx}
+                  className={`rp-drop-item ${i === idx ? 'is-current' : ''}`}
+                  onClick={() => pickTrack(i)}
+                  title={t.name || t.file}
+                >
+                  <span className="rp-drop-num">{String(i + 1).padStart(2, '0')}</span>
+                  <span className="rp-drop-name">{t.name || t.file}</span>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
 
         <div className="rp-progress-wrap">
@@ -104,10 +190,10 @@ export default function RetroPlayer({
 
         <div className="rp-buttons">
           {/* ︎ = VARIATION SELECTOR-15: fuerza render texto (no color emoji en iOS) */}
-          <button className="rp-btn" title="anterior" onClick={() => skip(-10)} disabled={!canControl}>
+          <button className="rp-btn" title={hasList ? 'track anterior' : 'anterior'} onClick={prev} disabled={!canControl}>
             <span className="rp-ico">{'◀︎◀︎'}</span>
           </button>
-          <button className="rp-btn" title="siguiente" onClick={() => skip(10)} disabled={!canControl}>
+          <button className="rp-btn" title={hasList ? 'track siguiente' : 'siguiente'} onClick={next} disabled={!canControl}>
             <span className="rp-ico">{'▶︎▶︎'}</span>
           </button>
           <button className="rp-btn" title={playing ? 'pausar' : 'reproducir'} onClick={togglePlay} disabled={!canControl}>

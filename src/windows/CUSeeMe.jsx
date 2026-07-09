@@ -3,6 +3,8 @@ import Slot from '../components/Slot'
 import MosaicDialog from '../components/MosaicDialog'
 import SourceViewer from '../components/SourceViewer'
 import FakeDevTools from '../components/FakeDevTools'
+import RetroPlayer from '../components/RetroPlayer'
+import ApologyPopup from '../components/ApologyPopup'
 import './CUSeeMe.css'
 
 /* ─── 9 transmisiones — fragmentos de la misma obsesión ─── */
@@ -109,7 +111,7 @@ const bookmarks = [
   },
   {
     app:   'mp3',
-    label: 'mp3 file',
+    label: 'notas de voz eliminadas',
     icon:  <IconImg src="/carpeta%20audio.png" alt="audio folder" />,
     emoji: '♪',
   },
@@ -124,6 +126,9 @@ export default function CUSeeMe({ onOpen }) {
   const [dialog, setDialog] = useState(null)
   const [sourceOpen, setSourceOpen] = useState(false)
   const [devtoolsOpen, setDevtoolsOpen] = useState(false)
+  /* Player fijo en la home + popup al cerrarlo */
+  const [playerHidden, setPlayerHidden] = useState(false)
+  const [apologyOpen,  setApologyOpen]  = useState(false)
 
   /* Cerrar cualquier menu al clickear afuera */
   useEffect(() => {
@@ -459,9 +464,28 @@ export default function CUSeeMe({ onOpen }) {
               <div className="cu-welcome-inline">welcome 2 ur last fucking chance!</div>
             </span>
           </h1>
-          <p className="cu-instr">
-            clic en cualquier <b>transmisión</b> para abrir la conversación con quien la emite
-          </p>
+          {!playerHidden && (
+            <div className="cu-inline-player">
+              <a
+                className="cu-inline-player-dl"
+                href="/first-recording.mp3"
+                download="first-recording.mp3"
+                title="descargar mp3"
+                aria-label="descargar"
+              >↓</a>
+              <button
+                className="cu-inline-player-x"
+                onClick={() => { setPlayerHidden(true); setApologyOpen(true) }}
+                title="cerrar reproductor"
+                aria-label="cerrar"
+              >×</button>
+              <RetroPlayer
+                artist="????"
+                track="xfavor no t olvides de esto"
+                src="/first-recording.mp3"
+              />
+            </div>
+          )}
 
           <div className="cu-grid">
             {feeds.map((f, i) => (
@@ -551,6 +575,7 @@ export default function CUSeeMe({ onOpen }) {
       <MosaicDialog dialog={dialog} onClose={() => setDialog(null)} />
       <SourceViewer open={sourceOpen} onClose={() => setSourceOpen(false)} />
       <FakeDevTools open={devtoolsOpen} onClose={() => setDevtoolsOpen(false)} />
+      <ApologyPopup open={apologyOpen} onClose={() => setApologyOpen(false)} />
     </section>
   )
 }

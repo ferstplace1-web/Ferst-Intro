@@ -10,7 +10,7 @@ import ThemePicker from './components/ThemePicker'
 const APPS = {
   msn:      { Component: MSN,               label: 'MSN Messenger', pos: { x: 120, y: 90  } },
   limewire: { Component: LimeWire,          label: 'donde_estas?',  pos: { x: 80,  y: 200 } },
-  mp3:      { Component: RetroPlayerWindow, label: 'mp3 file',      pos: { x: 220, y: 160 } },
+  mp3:      { Component: RetroPlayerWindow, label: 'notas de voz eliminadas', pos: { x: 220, y: 160 } },
   ads:      { Component: Classifieds,       label: 'El Anuncio',    pos: { x: 300, y: 110 } },
 }
 

@@ -107,9 +107,74 @@
   -webkit-font-smoothing: none;
   flex-shrink: 0;
 }
+.rp-drop:not(:disabled) { cursor: pointer; }
+.rp-drop:not(:disabled):hover {
+  background: linear-gradient(180deg, #ffffff 0%, #e8e0c8 100%);
+}
+.rp-drop:not(:disabled):active {
+  box-shadow: inset -1px -1px 0 #ffffff, inset 1px 1px 0 #808080;
+}
 .rp-arrow {
   font-size: 7px;
   margin-left: 1px;
+}
+
+/* ─── Dropdown menu (playlist) ─── */
+.rp-field-track { position: relative; }
+.rp-drop-menu {
+  position: absolute;
+  top: 100%; right: 0;
+  z-index: 40;
+  margin: 2px 0 0;
+  padding: 2px;
+  list-style: none;
+  min-width: 240px;
+  max-width: 320px;
+  max-height: 240px;
+  overflow-y: auto;
+  background: #ffffff;
+  border: 1px solid #7a7a7a;
+  box-shadow:
+    inset 1px 1px 0 #ffffff,
+    inset -1px -1px 0 #d4d0c8,
+    3px 3px 6px rgba(0,0,0,0.2);
+  font-family: Tahoma, sans-serif;
+  font-size: 11px;
+  color: #000;
+  -webkit-font-smoothing: none;
+}
+.rp-drop-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.rp-drop-item:hover {
+  background: #2f5fdb;
+  color: #ffffff;
+}
+.rp-drop-item.is-current {
+  background: #e8e0c8;
+  font-weight: 700;
+}
+.rp-drop-item.is-current:hover {
+  background: #2f5fdb;
+  color: #ffffff;
+}
+.rp-drop-num {
+  color: #666;
+  font-size: 10px;
+  flex: none;
+  min-width: 18px;
+}
+.rp-drop-item:hover .rp-drop-num { color: #dcdcff; }
+.rp-drop-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* ─── Progress slider ─── */

@@ -338,14 +338,18 @@
 @media (max-width: 900px) {
   .cu-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
 }
-/* Mobile — feed vertical (cada card = un momento) */
+/* Mobile — grid 2 columnas estilo YouTube (más opciones visibles) */
 @media (max-width: 640px) {
   .cu-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
     max-width: 100%;
     padding: 0 2px;
   }
+}
+/* Phones muy chicos: 1 col para que se lea */
+@media (max-width: 360px) {
+  .cu-grid { grid-template-columns: 1fr; gap: 14px; }
 }
 
 .cu-feed {
@@ -677,24 +681,48 @@
     margin: 0 0 22px;
   }
 
-  /* Feed cards Instagram-like — mucho más aire y peso visual */
+  /* Cards mobile compactas · estilo YouTube grid 2 cols */
   .cu-feed {
-    box-shadow: 3px 3px 0 var(--black);
+    box-shadow: 2px 2px 0 var(--black);
   }
   .cu-feed-bar {
-    padding: 7px 12px;
-    font-size: 12px;
+    padding: 5px 8px;
+    font-size: 10px;
   }
   .cu-feed-meta {
-    padding: 12px 14px 6px;
+    padding: 8px 8px 4px;
   }
-  .cu-feed-title { font-size: 16px; line-height: 1.25; }
-  .cu-feed-sub { font-size: 13px; line-height: 1.4; white-space: normal; }
-  .cu-feed-loc { font-size: 12px; }
-  .cu-feed-foot {
-    padding: 6px 14px 14px;
+  .cu-feed-title {
     font-size: 12px;
+    line-height: 1.25;
+    /* Permitir 2 líneas máximo para títulos largos */
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: initial;
   }
+  .cu-feed-sub {
+    font-size: 10px;
+    line-height: 1.3;
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: initial;
+  }
+  .cu-feed-loc {
+    font-size: 9px;
+    margin-top: 3px;
+  }
+  .cu-feed-foot {
+    padding: 4px 8px 8px;
+    font-size: 9px;
+    gap: 4px;
+  }
+  .cu-feed-stats { display: none; }  /* Ocultamos fps/kbps en cards chicas */
 
   /* usuario_bloqueado — el que no responde — refuerzo visual */
   .cu-feed.is-blocked {

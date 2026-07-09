@@ -506,9 +506,12 @@ export default function CUSeeMe({ onOpen }) {
                 <div className="cu-feed-body">
                   {f.blocked ? (
                     <div className="cu-blocked">
-                      <div className="cu-blocked-mask" />
-                      <span className="cu-blocked-txt">CONEXIÓN<br/>RECHAZADA</span>
-                      <span className="cu-blocked-sub">más habitaciones, más llaves</span>
+                      <img
+                        className="cu-blocked-img"
+                        src="/WhatsApp%20Image%202026-07-09%20at%206.44.46%20AM.jpeg"
+                        alt="usuario_bloqueado"
+                        draggable={false}
+                      />
                     </div>
                   ) : (
                     <Slot

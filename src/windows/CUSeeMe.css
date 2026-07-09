@@ -544,36 +544,23 @@
 }
 .cu-feed-body .slot input[type="file"] { display: none; }
 
+/* Feed body del blocked — mantiene 4:3 como el resto del grid.
+   La imagen se recorta (object-fit: cover) para llenar sin bordes negros. */
 .cu-blocked {
   position: absolute; inset: 0;
   background: var(--black);
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  color: var(--cold-white);
-  font-family: var(--f-mono);
-  text-align: center;
   overflow: hidden;
 }
-.cu-blocked-mask {
+/* Imagen fill total — sin bordes, cubre todo el tile */
+.cu-blocked-img {
   position: absolute; inset: 0;
-  background: repeating-linear-gradient(0deg, rgba(255,255,255,0.02) 0 2px, rgba(0,0,0,0.15) 2px 4px);
-}
-.cu-blocked-txt {
-  position: relative;
-  font-family: var(--f-mono);
-  font-weight: 700;
-  letter-spacing: 2px;
-  color: var(--red);
-  font-size: clamp(11px, 1.6vw, 14px);
-  animation: cu-flicker 1.6s steps(3) infinite;
-}
-.cu-blocked-sub {
-  position: relative;
-  font-family: var(--f-mono);
-  font-size: 10px;
-  color: var(--grey);
-  letter-spacing: 0.5px;
-  margin-top: 6px;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  filter: contrast(1.05) saturate(0.85);
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
 }
 @keyframes cu-flicker {
   0%, 70% { opacity: 1; }
@@ -895,10 +882,6 @@
   .cu-feed.is-blocked {
     box-shadow: 3px 3px 0 var(--red);
   }
-  .cu-blocked-txt {
-    font-size: clamp(13px, 4vw, 16px);
-  }
-
   /* Shortcuts en 2 columnas apretadas */
   .cu-shortcuts {
     margin: 32px auto 0;
